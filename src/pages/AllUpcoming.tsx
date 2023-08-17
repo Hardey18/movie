@@ -1,0 +1,39 @@
+import { useEffect, useState } from "react";
+import { Skeleton } from "antd";
+import getMovieData from "../api";
+import MovieList from "../components/MovieList";
+
+const AllUpcoming = () => {
+  const [videoData, setVideoData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    getMovieData(
+      "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
+      setVideoData,
+      setLoading,
+      setError,
+      false
+    );
+  }, []);
+
+  if (loading) {
+    return <Skeleton active />;
+  }
+
+  if (error) {
+    return <p>Error: Error Fetching Data</p>;
+  }
+
+  return (
+    <MovieList
+      categories="Upcoming"
+      browse="Browse all upcoming"
+      products={videoData}
+      link=""
+    />
+  );
+};
+
+export default AllUpcoming;
