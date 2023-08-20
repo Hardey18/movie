@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const HomeHeader = () => {
   const [search, setSearch] = useState("");
-  const onChange = ({ target }) => setSearch(target.value);
+  const onChange = ({ target }: any) => setSearch(target.value);
 
   console.log("SEARCH", search);
   return (
