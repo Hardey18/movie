@@ -5,12 +5,14 @@ import AllNowPlaying from "./pages/AllNowPlaying";
 import AllPopular from "./pages/AllPopular";
 import AllTopRated from "./pages/AllTopRated";
 import AllUpcoming from "./pages/AllUpcoming";
+import AllTrending from "./pages/AllTrending";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/details" element={<MovieDetails />} />
+      <Route path="/trending" element={<AllTrending />} />
       <Route path="/now-playing" element={<AllNowPlaying />} />
       <Route path="/popular" element={<AllPopular />} />
       <Route path="/top-rated" element={<AllTopRated />} />

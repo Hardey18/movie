@@ -160,7 +160,7 @@ const MovieDetails = () => {
                   {/* Product details */}
                   <div className="border-t border-gray-200">
                     <h2 className="text-sm font-medium text-gray-400 uppercase mt-8">
-                      Description
+                      Overview
                     </h2>
 
                     <div
