@@ -47,13 +47,9 @@ const MovieDetails = () => {
     );
   }, []);
 
-  // console.log("DATA", creditData);
-
   const actors = creditData?.cast
     .filter((actors) => actors.known_for_department === "Acting")
     .slice(0, 15);
-
-  console.log("ACTORS", actors);
 
   if (loading) {
     return <Skeleton className="p-4 md:p-8" active />;

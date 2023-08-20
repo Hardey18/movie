@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Skeleton } from 'antd';
+import { Skeleton } from "antd";
 import getMovieData from "../api";
 import MovieList from "../components/MovieList";
 
@@ -19,7 +19,9 @@ const AllPopular = () => {
   }, []);
 
   if (loading) {
-    return <Skeleton active />;
+    return (
+      <Skeleton avatar paragraph={{ rows: 4 }} className="p-4 md:p-8" active />
+    );
   }
 
   if (error) {

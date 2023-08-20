@@ -2,6 +2,7 @@ import { FC } from "react";
 import { RollbackOutlined } from "@ant-design/icons";
 import { MovieListProps } from "../typings";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const MovieList: FC<MovieListProps> = ({
   categories,
@@ -10,11 +11,13 @@ const MovieList: FC<MovieListProps> = ({
   four,
   link,
 }) => {
+  const query = useLocation().pathname;
+  console.log("QUERY", query);
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-6 lg:max-w-7xl lg:px-8">
-        <div className="sm:flex sm:items-baseline sm:justify-between">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900 flex items-center justify-center">
+        <div className={`flex justify-between items-center ${query !== "/" ? "mt-8 md:mt-24" : ""}`}>
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900 flex items-center">
             {!four && (
               <Link to={"/"}>
                 <RollbackOutlined style={{ color: "indigo" }} />
@@ -24,7 +27,7 @@ const MovieList: FC<MovieListProps> = ({
           </h2>
           <a
             href="#"
-            className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block"
+            className="text-sm font-semibold text-indigo-600 hover:text-indigo-500"
           >
             {four && (
               <div>
@@ -35,8 +38,11 @@ const MovieList: FC<MovieListProps> = ({
           </a>
         </div>
 
-          <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
-            {products?.map((product) => (
+        <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
+          {products?.length === 0 ? (
+            <div>There are no movies that matches your query</div>
+          ) : (
+            products?.map((product) => (
               <Link to={`/details/${product.id.toString()}`} key={product.id}>
                 <div className="relative">
                   <div className="relative h-72 w-full overflow-hidden rounded-lg">
@@ -65,8 +71,9 @@ const MovieList: FC<MovieListProps> = ({
                   </div>
                 </div>
               </Link>
-            ))}
-          </div>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
