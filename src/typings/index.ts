@@ -31,6 +31,15 @@ export interface IMovieDataProps {
   belongs_to_collection: BelongsToCollectionProps;
 }
 
+export interface IVideoDataProps {
+  results: VideoResultsProps[];
+}
+
+interface VideoResultsProps {
+  name: string;
+  key: string;
+}
+
 export interface ICreditDataProps {
   cast: CastProps[]
 }

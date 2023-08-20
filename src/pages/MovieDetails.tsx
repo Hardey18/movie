@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import getMovieData from "../api";
 import { Skeleton } from "antd";
 import { StarIcon } from "@heroicons/react/20/solid";
+import YouTube, { YouTubeProps } from "react-youtube";
 import { getYear, numberWithCommas, toHoursAndMinutes } from "../utils";
+import { Button, Dialog } from "@material-tailwind/react";
 import Cards from "../reusables/Cards";
-import { ICreditDataProps, IMovieDataProps } from "../typings";
+import { ICreditDataProps, IMovieDataProps, IVideoDataProps } from "../typings";
 import { RollbackOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import CardCarousel from "../components/CardCarousel";
@@ -15,11 +17,33 @@ function classNames(...classes: string[]) {
 
 const MovieDetails = () => {
   const [movieData, setMovieData] = useState<IMovieDataProps>(null!);
+  const [videoData, setVideoData] = useState<IVideoDataProps>(null!);
   const [creditData, setCreditData] = useState<ICreditDataProps>(null!);
   const [loading, setLoading] = useState(true);
   const [creditLoading, setCreditLoading] = useState(true);
+  const [videoLoading, setVideoLoading] = useState(true);
   const [error, setError] = useState(null);
   const [creditError, setCreditError] = useState(null);
+  const [videoError, setVideoError] = useState(null);
+  const [open, setOpen] = useState(false);
+
+  const onPlayerReady: YouTubeProps["onReady"] = (event) => {
+    // access to player in all event handlers via event.target
+    event.target.pauseVideo();
+  };
+
+  const opts: YouTubeProps["opts"] = {
+    // height: "390",
+    // width: "640",
+    height: "390",
+    width: "100%",
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 1,
+    },
+  };
+
+  const handleOpen = () => setOpen(!open);
 
   const navigate = useNavigate();
 
@@ -46,6 +70,19 @@ const MovieDetails = () => {
       true
     );
   }, []);
+
+  useEffect(() => {
+    getMovieData(
+      `https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`,
+      setVideoData,
+      setVideoLoading,
+      setVideoError,
+      false,
+      true
+    );
+  }, []);
+
+  const trailer = videoData?.results.filter(movie => movie.name === 'Official Trailer');
 
   const actors = creditData?.cast
     .filter((actors) => actors.known_for_department === "Acting")
@@ -124,6 +161,17 @@ const MovieDetails = () => {
                           {toHoursAndMinutes(movieData.runtime)}
                         </div>
                       </div>
+
+                      <Button onClick={handleOpen} variant="gradient">
+                        Play Trailer
+                      </Button>
+                      <Dialog open={open} handler={handleOpen}>
+                        <YouTube
+                          videoId={trailer[0]?.key}
+                          opts={opts}
+                          onReady={onPlayerReady}
+                        />
+                      </Dialog>
                     </div>
                   </div>
                 </div>
@@ -149,6 +197,11 @@ const MovieDetails = () => {
                       alt={movieData.title}
                       className="lg:col-span-2 lg:row-span-2 rounded-lg"
                     />
+                  {/* <YouTube
+                          videoId="2g811Eo7K8U"
+                          opts={opts}
+                          onReady={onPlayerReady}
+                        /> */}
                   </div>
                 </div>
 
