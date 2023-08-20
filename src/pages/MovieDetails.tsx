@@ -4,9 +4,10 @@ import { Skeleton } from "antd";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { getYear, numberWithCommas, toHoursAndMinutes } from "../utils";
 import Cards from "../reusables/Cards";
-import { IMovieDataProps } from "../typings";
+import { ICreditDataProps, IMovieDataProps } from "../typings";
 import { RollbackOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import CardCarousel from "../components/CardCarousel";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -14,8 +15,11 @@ function classNames(...classes: string[]) {
 
 const MovieDetails = () => {
   const [movieData, setMovieData] = useState<IMovieDataProps>(null!);
+  const [creditData, setCreditData] = useState<ICreditDataProps>(null!);
   const [loading, setLoading] = useState(true);
+  const [creditLoading, setCreditLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [creditError, setCreditError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -32,7 +36,30 @@ const MovieDetails = () => {
     );
   }, []);
 
+  useEffect(() => {
+    getMovieData(
+      `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`,
+      setCreditData,
+      setCreditLoading,
+      setCreditError,
+      false,
+      true
+    );
+  }, []);
+
+  // console.log("DATA", creditData);
+
+  const actors = creditData?.cast
+    .filter((actors) => actors.known_for_department === "Acting")
+    .slice(0, 15);
+
+  console.log("ACTORS", actors);
+
   if (loading) {
+    return <Skeleton className="p-4 md:p-8" active />;
+  }
+
+  if (creditLoading) {
     return <Skeleton className="p-4 md:p-8" active />;
   }
 
@@ -40,7 +67,9 @@ const MovieDetails = () => {
     return <p>Error: Error Fetching Data</p>;
   }
 
-  console.log("DETAILS", movieData);
+  if (creditError) {
+    return <p>Error: Error Fetching Data</p>;
+  }
 
   return (
     <div className="bg-gray-900">
@@ -58,7 +87,7 @@ const MovieDetails = () => {
                 <div className="lg:col-span-5 lg:col-start-8">
                   <div className="flex justify-between">
                     <h1 className="text-3xl font-medium text-gray-400">
-                      {movieData.original_title} ({getYear(movieData.release_date)})
+                      {movieData.title} ({getYear(movieData.release_date)})
                     </h1>
                   </div>
                   <div
@@ -138,6 +167,14 @@ const MovieDetails = () => {
                       className="prose prose-sm mt-4 text-white"
                       dangerouslySetInnerHTML={{ __html: movieData.overview }}
                     />
+                  </div>
+
+                  <div className="mt-8 border-t border-gray-200 pt-8">
+                    <h2 className="text-sm font-medium text-gray-400 uppercase">
+                      Top Billed Cast
+                    </h2>
+
+                    <CardCarousel cast={actors} />
                   </div>
 
                   <div className="mt-8 border-t border-gray-200 pt-8">
