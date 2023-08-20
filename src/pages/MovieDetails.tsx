@@ -96,11 +96,19 @@ const MovieDetails = () => {
     return <Skeleton className="p-4 md:p-8" active />;
   }
 
+  if (videoLoading) {
+    return <Skeleton className="p-4 md:p-8" active />;
+  }
+
   if (error) {
     return <p>Error: Error Fetching Data</p>;
   }
 
   if (creditError) {
+    return <p>Error: Error Fetching Data</p>;
+  }
+
+  if (videoError) {
     return <p>Error: Error Fetching Data</p>;
   }
 
