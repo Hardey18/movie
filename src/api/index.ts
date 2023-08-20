@@ -13,7 +13,7 @@ const getMovieData = (
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization: import.meta.env.VITE_BEARER_TOKEN,
+      Authorization: `Bearer ${import.meta.env.VITE_BEARER_TOKEN}`,
     },
   };
 

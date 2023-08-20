@@ -22,6 +22,8 @@ export interface IMovieDataProps {
   vote_count: number;
   poster_path: string;
   overview: string;
+  runtime: number;
+  release_date: string;
   genres: GenresProps[];
   production_companies: ProductionCompanies[];
   spoken_languages: SpokenLanguagesProps[];

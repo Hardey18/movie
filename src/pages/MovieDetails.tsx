@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import getMovieData from "../api";
 import { Skeleton } from "antd";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { numberWithCommas } from "../utils";
+import { getYear, numberWithCommas, toHoursAndMinutes } from "../utils";
 import Cards from "../reusables/Cards";
 import { IMovieDataProps } from "../typings";
 import { RollbackOutlined } from "@ant-design/icons";
@@ -33,14 +33,14 @@ const MovieDetails = () => {
   }, []);
 
   if (loading) {
-    return <Skeleton active />;
+    return <Skeleton className="p-4 md:p-8" active />;
   }
 
   if (error) {
     return <p>Error: Error Fetching Data</p>;
   }
 
-  console.log("DETAILS", movieData)
+  console.log("DETAILS", movieData);
 
   return (
     <div className="bg-gray-900">
@@ -58,7 +58,7 @@ const MovieDetails = () => {
                 <div className="lg:col-span-5 lg:col-start-8">
                   <div className="flex justify-between">
                     <h1 className="text-3xl font-medium text-gray-400">
-                      {movieData.original_title}
+                      {movieData.original_title} ({getYear(movieData.release_date)})
                     </h1>
                   </div>
                   <div
@@ -68,34 +68,35 @@ const MovieDetails = () => {
                   {/* Reviews */}
                   <div className="mt-4">
                     <h2 className="sr-only">Reviews</h2>
-                    <div className="flex items-center">
-                      <p className="text-sm text-gray-300">
-                        {movieData.vote_average}
-                        <span className="sr-only"> out of 5 stars</span>
-                      </p>
-                      <div className="ml-1 flex items-center">
-                        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((rating) => (
-                          <StarIcon
-                            key={rating}
-                            className={classNames(
-                              Math.floor(movieData.vote_average) > rating
-                                ? "text-yellow-400"
-                                : "text-gray-200",
-                              "h-5 w-5 flex-shrink-0"
-                            )}
-                            aria-hidden="true"
-                          />
-                        ))}
+                    <div className="flex flex-col">
+                      <div className="flex mb-2">
+                        <p className="text-sm text-gray-300">
+                          {movieData.vote_average}
+                          <span className="sr-only"> out of 5 stars</span>
+                        </p>
+                        <div className="ml-1 flex items-center">
+                          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((rating) => (
+                            <StarIcon
+                              key={rating}
+                              className={classNames(
+                                Math.floor(movieData.vote_average) > rating
+                                  ? "text-yellow-400"
+                                  : "text-gray-200",
+                                "h-5 w-5 flex-shrink-0"
+                              )}
+                              aria-hidden="true"
+                            />
+                          ))}
+                        </div>
                       </div>
-                      <div
-                        aria-hidden="true"
-                        className="ml-4 text-sm text-gray-300"
-                      >
-                        ·
-                      </div>
-                      <div className="ml-4 flex">
+                      <div className="mb-2">
                         <div className="text-sm font-medium text-gray-400">
                           {numberWithCommas(movieData.vote_count)} vote counts
+                        </div>
+                      </div>
+                      <div className="mb-2">
+                        <div className="text-sm font-medium text-gray-400">
+                          {toHoursAndMinutes(movieData.runtime)}
                         </div>
                       </div>
                     </div>
@@ -105,7 +106,10 @@ const MovieDetails = () => {
                 {/* Image gallery */}
                 <div className="mt-8 lg:col-span-7 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0">
                   <h2 className="text-2xl font-bold tracking-tight text-gray-300 mb-4">
-                    <div onClick={() => navigate(-1)} className="cursor-pointer flex items-center">
+                    <div
+                      onClick={() => navigate(-1)}
+                      className="cursor-pointer flex items-center"
+                    >
                       <RollbackOutlined className="mt-2" />
                       <div className="mt-2 ml-2">Back</div>
                     </div>
@@ -125,8 +129,8 @@ const MovieDetails = () => {
 
                 <div className="mt-8 lg:col-span-5">
                   {/* Product details */}
-                  <div>
-                    <h2 className="text-sm font-medium text-gray-400 uppercase">
+                  <div className="border-t border-gray-200">
+                    <h2 className="text-sm font-medium text-gray-400 uppercase mt-8">
                       Description
                     </h2>
 

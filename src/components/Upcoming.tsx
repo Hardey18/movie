@@ -19,7 +19,9 @@ const Upcoming = () => {
   }, []);
 
   if (loading) {
-    return <Skeleton active />;
+    return (
+      <Skeleton avatar paragraph={{ rows: 4 }} className="p-4 md:p-8" active />
+    );
   }
 
   if (error) {
