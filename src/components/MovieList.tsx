@@ -3,6 +3,7 @@ import { RollbackOutlined } from "@ant-design/icons";
 import { MovieListProps } from "../typings";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { format } from "date-fns";
 import CircularProgressBar from "./CircularProgressBar";
 import { percent } from "../utils";
 
@@ -14,7 +15,6 @@ const MovieList: FC<MovieListProps> = ({
   link,
 }) => {
   const query = useLocation().pathname;
-  console.log("QUERY", query);
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-6 lg:max-w-7xl lg:px-8">
@@ -60,10 +60,13 @@ const MovieList: FC<MovieListProps> = ({
                   </div>
                   <div className="relative mt-4">
                     <h3 className="text-lg font-semibold text-left text-black">
-                    {product.title}
+                      {product.title}
                     </h3>
                     <h3 className="text-sm text-left font-medium text-gray-600">
-                      Release Date: {product.release_date}
+                      {format(
+                        new Date(product.release_date),
+                        "d MMMM yyyy"
+                      )}
                     </h3>
                   </div>
                   <div className="absolute inset-x-0 top-0 flex h-72 items-end justify-end overflow-hidden rounded-lg p-4">
@@ -71,7 +74,9 @@ const MovieList: FC<MovieListProps> = ({
                       aria-hidden="true"
                       className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50"
                     />
-                      <CircularProgressBar percent={percent(product.vote_average)} />
+                    <CircularProgressBar
+                      percent={percent(product.vote_average)}
+                    />
                   </div>
                 </div>
               </Link>
