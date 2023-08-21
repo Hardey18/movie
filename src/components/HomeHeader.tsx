@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Input, Button } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+import { TargetProps } from "../typings";
 
 const HomeHeader = () => {
   const [search, setSearch] = useState("");
-  const onChange = ({ target }: any) => setSearch(target.value);
+  const onChange = ({ target }: TargetProps) => setSearch(target.value);
 
-  console.log("SEARCH", search);
   return (
     <div className="bg-indigo-200 py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">

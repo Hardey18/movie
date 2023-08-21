@@ -1,6 +1,6 @@
+/** @type {import('tailwindcss').Config} */
 import withMT from "@material-tailwind/react/utils/withMT";
 
-/** @type {import('tailwindcss').Config} */
 export default withMT({
   content: [
     "./index.html",
@@ -9,6 +9,7 @@ export default withMT({
   theme: {
     extend: {},
   },
-  plugins: [],
+  // eslint-disable-next-line no-undef
+  plugins: [require('daisyui')],
 })
 

@@ -12,3 +12,7 @@ export const toHoursAndMinutes = (totalMinutes: number) => {
 export const getYear = (date: string) => {
   return new Date(date).getFullYear();
 }
+
+export const percent = (vote: number) => {
+  return Math.round((vote / 10) * 100);
+}

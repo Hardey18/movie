@@ -44,6 +44,18 @@ export interface ICreditDataProps {
   cast: CastProps[]
 }
 
+export interface ICPercentProps {
+  percent: number
+}
+
+export interface TargetProps {
+  target: InnerTargetProps;
+}
+
+interface InnerTargetProps {
+  value: string
+}
+
 export interface CastProps {
   adult: boolean
   cast_id: number
