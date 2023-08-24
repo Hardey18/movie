@@ -53,7 +53,7 @@ const MovieList: FC<MovieListProps> = ({
                 <div className="relative">
                   <div className="relative h-72 w-full overflow-hidden rounded-lg">
                     <img
-                      src={`https://image.tmdb.org/t/p/original${product.backdrop_path}`}
+                      src={product.backdrop_path ? `https://image.tmdb.org/t/p/original${product.backdrop_path}` : "https://www.snapon.co.za/images/thumbs/default-image_550.png"}
                       alt={product.title}
                       className="h-full w-full object-cover object-center"
                     />
@@ -63,7 +63,7 @@ const MovieList: FC<MovieListProps> = ({
                       {product.title}
                     </h3>
                     <h3 className="text-sm text-left font-medium text-gray-600">
-                      {format(
+                      {product.release_date && format(
                         new Date(product.release_date),
                         "d MMMM yyyy"
                       )}
