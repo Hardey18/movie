@@ -284,7 +284,7 @@ const MovieDetails = () => {
                         <Link
                           to={movieData.homepage}
                           target="_blank"
-                          className="hidden p-2 text-gray-400 hover:text-gray-500 lg:block"
+                          className="p-2 text-gray-400 hover:text-gray-500 lg:block"
                         >
                           <span className="sr-only">Search</span>
                           <LinkOutlined
