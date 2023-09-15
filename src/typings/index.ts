@@ -1,6 +1,6 @@
 export interface MovieListProps {
   categories: string;
-  browse: string;
+  // browse: string;
   products: ProductProps[] | null;
   four?: boolean;
   link: string;

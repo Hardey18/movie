@@ -31,7 +31,7 @@ const AllNowPlaying = () => {
   return (
     <MovieList
       categories="Now Playing"
-      browse="Browse all now playing"
+      // browse="Browse all now playing"
       products={videoData}
       link=""
     />

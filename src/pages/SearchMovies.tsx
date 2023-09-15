@@ -32,7 +32,7 @@ const SearchMovies = () => {
   return (
     <MovieList
       categories={`Search for: ${query.replaceAll("%20", " ")}`}
-      browse="Browse all trending"
+      // browse="Browse all trending"
       products={videoData}
       link=""
     />

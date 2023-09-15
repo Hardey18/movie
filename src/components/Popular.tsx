@@ -31,7 +31,7 @@ const Popular = () => {
   return (
     <MovieList
       categories="Popular"
-      browse="Browse all popular"
+      // browse="Browse all popular"
       products={videoData}
       four
       link="/popular"

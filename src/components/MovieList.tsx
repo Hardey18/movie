@@ -9,10 +9,10 @@ import { percent } from "../utils";
 
 const MovieList: FC<MovieListProps> = ({
   categories,
-  browse,
+  // browse,
   products,
   four,
-  link,
+  // link,
 }) => {
   const query = useLocation().pathname;
   return (
@@ -29,9 +29,9 @@ const MovieList: FC<MovieListProps> = ({
                 <RollbackOutlined style={{ color: "indigo" }} />
               </Link>
             )}
-            <div className="mt-2 ml-2">{categories}</div>
+            <div className="mt-2 ml-2 uppercase">{categories}</div>
           </h2>
-          <a
+          {/* <a
             href="#"
             className="text-sm font-semibold text-indigo-600 hover:text-indigo-500"
           >
@@ -41,7 +41,7 @@ const MovieList: FC<MovieListProps> = ({
                 <span aria-hidden="true"> &rarr;</span>
               </div>
             )}
-          </a>
+          </a> */}
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">

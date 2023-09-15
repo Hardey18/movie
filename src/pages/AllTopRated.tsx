@@ -31,7 +31,7 @@ const AllTopRated = () => {
   return (
     <MovieList
       categories="Top Rated Movies"
-      browse="Browse all top rated"
+      // browse="Browse all top rated"
       products={videoData}
       link=""
     />
