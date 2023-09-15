@@ -30,7 +30,7 @@ const AllPopular = () => {
 
   return (
     <MovieList
-      categories="Popular"
+      categories="Popular Movies"
       browse="Browse all popular"
       products={videoData}
       link=""

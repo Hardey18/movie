@@ -30,7 +30,7 @@ const AllTrending = () => {
 
   return (
     <MovieList
-      categories="Trending"
+      categories="Trending Movies"
       browse="Browse all trending"
       products={videoData}
       link=""
