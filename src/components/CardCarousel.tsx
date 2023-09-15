@@ -9,7 +9,7 @@ const CardCarousel:FC<ICreditDataProps> = ({ cast }) => {
         <div className="rounded shadow-lg px-3 w-[148px]">
           <img
             className="w-full h-[140px]"
-            src={`https://image.tmdb.org/t/p/original${actor.profile_path}`}
+            src={actor.profile_path ? `https://image.tmdb.org/t/p/original${actor.profile_path}` : "https://www.snapon.co.za/images/thumbs/default-image_550.png"}
             alt={actor.name}
           />
           <div className="py-2">

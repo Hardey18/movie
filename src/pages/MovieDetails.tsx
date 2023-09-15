@@ -132,7 +132,7 @@ const MovieDetails = () => {
                     </h1>
                   </div>
                   <div
-                    className="prose prose-sm mt-4 text-white"
+                    className="prose prose-sm mt-4 text-white italic"
                     dangerouslySetInnerHTML={{ __html: movieData.tagline }}
                   />
                   {/* Reviews */}
