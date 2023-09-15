@@ -6,9 +6,20 @@ import YouTube, { YouTubeProps } from "react-youtube";
 import { getYear, numberWithCommas, toHoursAndMinutes } from "../utils";
 import { Button, Dialog } from "@material-tailwind/react";
 import Cards from "../reusables/Cards";
-import { ICreditDataProps, IMovieDataProps, IVideoDataProps } from "../typings";
-import { RollbackOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import {
+  ICreditDataProps,
+  IExternalIdDataProps,
+  IMovieDataProps,
+  IVideoDataProps,
+} from "../typings";
+import {
+  RollbackOutlined,
+  LinkOutlined,
+  FacebookFilled,
+  TwitterCircleFilled,
+  InstagramFilled,
+} from "@ant-design/icons";
+import { Link, useNavigate } from "react-router-dom";
 import CardCarousel from "../components/CardCarousel";
 
 function classNames(...classes: string[]) {
@@ -19,13 +30,20 @@ const MovieDetails = () => {
   const [movieData, setMovieData] = useState<IMovieDataProps>(null!);
   const [videoData, setVideoData] = useState<IVideoDataProps>(null!);
   const [creditData, setCreditData] = useState<ICreditDataProps>(null!);
+  const [externalIdsData, setExternalIdsData] = useState<IExternalIdDataProps>(
+    null!
+  );
   const [loading, setLoading] = useState(true);
   const [creditLoading, setCreditLoading] = useState(true);
   const [videoLoading, setVideoLoading] = useState(true);
+  const [externalIdsLoading, setExternalIdsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [creditError, setCreditError] = useState(null);
   const [videoError, setVideoError] = useState(null);
+  const [externalIdsError, setExternalIdsError] = useState(null);
   const [open, setOpen] = useState(false);
+
+  console.log("EXTERNAL IDs", externalIdsData);
 
   const onPlayerReady: YouTubeProps["onReady"] = (event) => {
     // access to player in all event handlers via event.target
@@ -82,7 +100,20 @@ const MovieDetails = () => {
     );
   }, []);
 
-  const trailer = videoData?.results.filter(movie => movie.name === 'Official Trailer');
+  useEffect(() => {
+    getMovieData(
+      `https://api.themoviedb.org/3/movie/${movieId}/external_ids`,
+      setExternalIdsData,
+      setExternalIdsLoading,
+      setExternalIdsError,
+      false,
+      true
+    );
+  }, []);
+
+  const trailer = videoData?.results.filter(
+    (movie) => movie.name === "Official Trailer"
+  );
 
   const actors = creditData?.cast
     .filter((actors) => actors.known_for_department === "Acting")
@@ -100,6 +131,10 @@ const MovieDetails = () => {
     return <Skeleton className="p-4 md:p-8" active />;
   }
 
+  if (externalIdsLoading) {
+    return <Skeleton className="p-4 md:p-8" active />;
+  }
+
   if (error) {
     return <p>Error: Error Fetching Data</p>;
   }
@@ -109,6 +144,10 @@ const MovieDetails = () => {
   }
 
   if (videoError) {
+    return <p>Error: Error Fetching Data</p>;
+  }
+
+  if (externalIdsError) {
     return <p>Error: Error Fetching Data</p>;
   }
 
@@ -205,7 +244,7 @@ const MovieDetails = () => {
                       alt={movieData.title}
                       className="lg:col-span-2 lg:row-span-2 rounded-lg"
                     />
-                  {/* <YouTube
+                    {/* <YouTube
                           videoId="2g811Eo7K8U"
                           opts={opts}
                           onReady={onPlayerReady}
@@ -232,6 +271,73 @@ const MovieDetails = () => {
                     </h2>
 
                     <CardCarousel cast={actors} />
+                  </div>
+
+                  <div className="mt-8 border-t border-gray-200 pt-8">
+                    <h2 className="text-sm font-medium text-gray-400 uppercase">
+                      Movie Links
+                    </h2>
+
+                    <div className="flex flex-1 items-center">
+                      {/* Movie Website */}
+                      <Link
+                        to={movieData.homepage}
+                        target="_blank"
+                        className="hidden p-2 text-gray-400 hover:text-gray-500 lg:block"
+                      >
+                        <span className="sr-only">Search</span>
+                        <LinkOutlined className="h-6 w-6" aria-hidden="true" />
+                      </Link>
+
+                      {/* Facebook Account */}
+                      <Link
+                        to={`https://www.facebook.com/${externalIdsData.facebook_id}`}
+                        target="_blank"
+                        className="p-2 text-gray-400 hover:text-gray-500 lg:ml-4"
+                      >
+                        <span className="sr-only">Account</span>
+                        <FacebookFilled
+                          className="h-6 w-6"
+                          aria-hidden="true"
+                        />
+                      </Link>
+
+                      {/* Twitter Account */}
+                      <Link
+                        to={`https://www.twitter.com/${externalIdsData.twitter_id}`}
+                        target="_blank"
+                        className="p-2 text-gray-400 hover:text-gray-500 lg:ml-4"
+                      >
+                        <span className="sr-only">Account</span>
+                        <TwitterCircleFilled
+                          className="h-6 w-6"
+                          aria-hidden="true"
+                        />
+                      </Link>
+
+                      {/* Instagram Account */}
+                      <Link
+                        to={`https://www.instagram.com/${externalIdsData.instagram_id}`}
+                        target="_blank"
+                        className="p-2 text-gray-400 hover:text-gray-500 lg:ml-4"
+                      >
+                        <span className="sr-only">Account</span>
+                        <InstagramFilled
+                          className="h-6 w-6"
+                          aria-hidden="true"
+                        />
+                      </Link>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 border-t border-gray-200 pt-8">
+                    <h2 className="text-sm font-medium text-gray-400 uppercase">
+                      Status
+                    </h2>
+
+                    <div className="prose prose-sm mt-4 text-white">
+                      <ul role="list">{movieData.status}</ul>
+                    </div>
                   </div>
 
                   <div className="mt-8 border-t border-gray-200 pt-8">

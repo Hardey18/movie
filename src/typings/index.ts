@@ -23,6 +23,8 @@ export interface IMovieDataProps {
   poster_path: string;
   overview: string;
   runtime: number;
+  status: string;
+  homepage: string;
   release_date: string;
   genres: GenresProps[];
   production_companies: ProductionCompanies[];
@@ -46,6 +48,14 @@ export interface ICreditDataProps {
 
 export interface ICPercentProps {
   percent: number
+}
+export interface IExternalIdDataProps {
+  id: number
+  imdb_id: string
+  wikidata_id: string
+  facebook_id: string
+  instagram_id: string,
+  twitter_id: string
 }
 
 export interface TargetProps {
