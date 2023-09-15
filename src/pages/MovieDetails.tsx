@@ -280,53 +280,64 @@ const MovieDetails = () => {
 
                     <div className="flex flex-1 items-center">
                       {/* Movie Website */}
-                      <Link
-                        to={movieData.homepage}
-                        target="_blank"
-                        className="hidden p-2 text-gray-400 hover:text-gray-500 lg:block"
-                      >
-                        <span className="sr-only">Search</span>
-                        <LinkOutlined className="h-6 w-6" aria-hidden="true" />
-                      </Link>
+                      {movieData.homepage ? (
+                        <Link
+                          to={movieData.homepage}
+                          target="_blank"
+                          className="hidden p-2 text-gray-400 hover:text-gray-500 lg:block"
+                        >
+                          <span className="sr-only">Search</span>
+                          <LinkOutlined
+                            className="h-6 w-6"
+                            aria-hidden="true"
+                          />
+                        </Link>
+                      ) : null}
 
                       {/* Facebook Account */}
-                      <Link
-                        to={`https://www.facebook.com/${externalIdsData.facebook_id}`}
-                        target="_blank"
-                        className="p-2 text-gray-400 hover:text-gray-500 lg:ml-4"
-                      >
-                        <span className="sr-only">Account</span>
-                        <FacebookFilled
-                          className="h-6 w-6"
-                          aria-hidden="true"
-                        />
-                      </Link>
+                      {externalIdsData.facebook_id ? (
+                        <Link
+                          to={`https://www.facebook.com/${externalIdsData.facebook_id}`}
+                          target="_blank"
+                          className="p-2 text-gray-400 hover:text-gray-500 lg:ml-4"
+                        >
+                          <span className="sr-only">Account</span>
+                          <FacebookFilled
+                            className="h-6 w-6"
+                            aria-hidden="true"
+                          />
+                        </Link>
+                      ) : null}
 
                       {/* Twitter Account */}
-                      <Link
-                        to={`https://www.twitter.com/${externalIdsData.twitter_id}`}
-                        target="_blank"
-                        className="p-2 text-gray-400 hover:text-gray-500 lg:ml-4"
-                      >
-                        <span className="sr-only">Account</span>
-                        <TwitterCircleFilled
-                          className="h-6 w-6"
-                          aria-hidden="true"
-                        />
-                      </Link>
+                      {externalIdsData.twitter_id ? (
+                        <Link
+                          to={`https://www.twitter.com/${externalIdsData.twitter_id}`}
+                          target="_blank"
+                          className="p-2 text-gray-400 hover:text-gray-500 lg:ml-4"
+                        >
+                          <span className="sr-only">Account</span>
+                          <TwitterCircleFilled
+                            className="h-6 w-6"
+                            aria-hidden="true"
+                          />
+                        </Link>
+                      ) : null}
 
                       {/* Instagram Account */}
-                      <Link
-                        to={`https://www.instagram.com/${externalIdsData.instagram_id}`}
-                        target="_blank"
-                        className="p-2 text-gray-400 hover:text-gray-500 lg:ml-4"
-                      >
-                        <span className="sr-only">Account</span>
-                        <InstagramFilled
-                          className="h-6 w-6"
-                          aria-hidden="true"
-                        />
-                      </Link>
+                      {externalIdsData.instagram_id ? (
+                        <Link
+                          to={`https://www.instagram.com/${externalIdsData.instagram_id}`}
+                          target="_blank"
+                          className="p-2 text-gray-400 hover:text-gray-500 lg:ml-4"
+                        >
+                          <span className="sr-only">Account</span>
+                          <InstagramFilled
+                            className="h-6 w-6"
+                            aria-hidden="true"
+                          />
+                        </Link>
+                      ) : null}
                     </div>
                   </div>
 
