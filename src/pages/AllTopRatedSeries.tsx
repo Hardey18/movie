@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react";
 import { Skeleton } from "antd";
-import MovieList from "./MovieList";
 import getMovieData from "../api";
+import MovieList from "../components/MovieList";
 
-const Upcoming = () => {
+const AllTopRatedSeries = () => {
   const [videoData, setVideoData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     getMovieData(
-      "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
+      "https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=1",
       setVideoData,
       setLoading,
       setError,
-      true
+      false
     );
   }, []);
 
+  // console.log("ALL DATA", videoData);
   if (loading) {
     return (
       <Skeleton avatar paragraph={{ rows: 4 }} className="p-4 md:p-8" active />
@@ -30,13 +31,12 @@ const Upcoming = () => {
 
   return (
     <MovieList
-      categories="Upcoming Movies"
-      // browse="Browse all upcoming"
+    categories="Top Rated Series"
+    // browse="Browse all top rated series"
       products={videoData}
-      four
-      link="/upcoming"
+      link=""
     />
   );
 };
 
-export default Upcoming;
+export default AllTopRatedSeries;

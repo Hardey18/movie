@@ -6,6 +6,21 @@ export interface MovieListProps {
   link: string;
 }
 
+export interface EpisodeListProps {
+  series: SeriesProps[];
+}
+
+export interface SeriesProps {
+  air_date: string;
+  episode_count: number;
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string;
+  season_number: number;
+  vote_average: number;
+}
+
 export interface CardProps {
   title: string;
   budget: number;
@@ -13,6 +28,8 @@ export interface CardProps {
 
 export interface IMovieDataProps {
   title: string;
+  seasons: SeriesProps[];
+  original_name: string;
   backdrop_path: string;
   original_title: string;
   tagline: string;
@@ -25,12 +42,21 @@ export interface IMovieDataProps {
   runtime: number;
   status: string;
   homepage: string;
+  number_of_seasons: number;
+  number_of_episodes: number;
   release_date: string;
+  first_air_date: string;
   genres: GenresProps[];
   production_companies: ProductionCompanies[];
   spoken_languages: SpokenLanguagesProps[];
   production_countries: ProductionCountriesProps[];
   belongs_to_collection: BelongsToCollectionProps;
+  created_by: SeriesCreatedByProps[]
+}
+
+interface SeriesCreatedByProps {
+  name: string;
+  profile_path: string;
 }
 
 export interface IVideoDataProps {
@@ -40,6 +66,7 @@ export interface IVideoDataProps {
 interface VideoResultsProps {
   name: string;
   key: string;
+  type: string;
 }
 
 export interface ICreditDataProps {
@@ -84,9 +111,11 @@ export interface CastProps {
 interface ProductProps {
   id: number;
   title: string;
+  name: string;
   backdrop_path: string;
   overview: string;
   release_date: string;
+  first_air_date: string;
   vote_average: number;
 }
 

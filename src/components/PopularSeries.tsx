@@ -3,20 +3,22 @@ import { Skeleton } from "antd";
 import MovieList from "./MovieList";
 import getMovieData from "../api";
 
-const Upcoming = () => {
+const PopularSeries = () => {
   const [videoData, setVideoData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     getMovieData(
-      "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
+      "https://api.themoviedb.org/3/tv/popular?language=en-US&page=1",
       setVideoData,
       setLoading,
       setError,
       true
     );
   }, []);
+
+  console.log("DATA", videoData);
 
   if (loading) {
     return (
@@ -30,13 +32,13 @@ const Upcoming = () => {
 
   return (
     <MovieList
-      categories="Upcoming Movies"
-      // browse="Browse all upcoming"
+      categories="Popular Series"
+      // browse="Browse all popular series"
       products={videoData}
       four
-      link="/upcoming"
+      link="/popular-series"
     />
   );
 };
 
-export default Upcoming;
+export default PopularSeries;

@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { Skeleton } from "antd";
-import MovieList from "./MovieList";
 import getMovieData from "../api";
+import MovieList from "../components/MovieList";
 
-const Upcoming = () => {
+const AllOnTheAir = () => {
   const [videoData, setVideoData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     getMovieData(
-      "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
+      "https://api.themoviedb.org/3/tv/on_the_air?language=en-US&page=1",
       setVideoData,
       setLoading,
       setError,
-      true
+      false
     );
   }, []);
 
@@ -30,13 +30,12 @@ const Upcoming = () => {
 
   return (
     <MovieList
-      categories="Upcoming Movies"
-      // browse="Browse all upcoming"
+      categories="On The Air"
+      // browse="Browse all on the air"
       products={videoData}
-      four
-      link="/upcoming"
+      link=""
     />
   );
 };
 
-export default Upcoming;
+export default AllOnTheAir;

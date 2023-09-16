@@ -31,17 +31,6 @@ const MovieList: FC<MovieListProps> = ({
             )}
             <div className="mt-2 ml-2 uppercase">{categories}</div>
           </h2>
-          {/* <a
-            href="#"
-            className="text-sm font-semibold text-indigo-600 hover:text-indigo-500"
-          >
-            {four && (
-              <div>
-                <Link to={link}>{browse}</Link>
-                <span aria-hidden="true"> &rarr;</span>
-              </div>
-            )}
-          </a> */}
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
@@ -49,22 +38,25 @@ const MovieList: FC<MovieListProps> = ({
             <div>There are no movies that matches your query</div>
           ) : (
             products?.map((product) => (
-              <Link to={`/details/${product.id.toString()}`} key={product.id}>
+              <Link to={`/details/${product.first_air_date ? "tv/" : ""}${product.id.toString()}`} key={product.id}>
                 <div className="relative">
                   <div className="relative h-72 w-full overflow-hidden rounded-lg">
                     <img
                       src={product.backdrop_path ? `https://image.tmdb.org/t/p/original${product.backdrop_path}` : "https://www.snapon.co.za/images/thumbs/default-image_550.png"}
-                      alt={product.title}
+                      alt={product.title || product.name}
                       className="h-full w-full object-cover object-center"
                     />
                   </div>
                   <div className="relative mt-4">
                     <h3 className="text-lg font-semibold text-left text-black">
-                      {product.title}
+                      {product.title || product.name}
                     </h3>
                     <h3 className="text-sm text-left font-medium text-gray-600">
                       {product.release_date && format(
                         new Date(product.release_date),
+                        "d MMMM yyyy"
+                      ) || product.first_air_date && format(
+                        new Date(product.first_air_date),
                         "d MMMM yyyy"
                       )}
                     </h3>

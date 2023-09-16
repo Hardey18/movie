@@ -21,6 +21,18 @@ import {
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import CardCarousel from "../components/CardCarousel";
+import EpisodeList from "../components/EpisodeList";
+import {
+  Accordion,
+  AccordionHeader,
+  AccordionBody,
+} from "@material-tailwind/react";
+import DropDownIcon from "../components/DropDownIcon";
+
+const CUSTOM_ANIMATION = {
+  mount: { scale: 1 },
+  unmount: { scale: 0.9 },
+};
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -42,8 +54,10 @@ const MovieDetails = () => {
   const [videoError, setVideoError] = useState(null);
   const [externalIdsError, setExternalIdsError] = useState(null);
   const [open, setOpen] = useState(false);
+  const [carouselOpen, setCarouselOpen] = useState(0);
 
-  console.log("EXTERNAL IDs", externalIdsData);
+  const handleCarouselOpen = (value: number) =>
+    setCarouselOpen(carouselOpen === value ? 0 : value);
 
   const onPlayerReady: YouTubeProps["onReady"] = (event) => {
     // access to player in all event handlers via event.target
@@ -67,9 +81,13 @@ const MovieDetails = () => {
 
   const movieId = window.location.href.split("/").reverse()[0];
 
+  const ifTV = window.location.href.includes("tv");
+
   useEffect(() => {
     getMovieData(
-      `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
+      ifTV
+        ? `https://api.themoviedb.org/3/tv/${movieId}?language=en-US`
+        : `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
       setMovieData,
       setLoading,
       setError,
@@ -80,7 +98,9 @@ const MovieDetails = () => {
 
   useEffect(() => {
     getMovieData(
-      `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`,
+      ifTV
+        ? `https://api.themoviedb.org/3/tv/${movieId}/credits?language=en-US`
+        : `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`,
       setCreditData,
       setCreditLoading,
       setCreditError,
@@ -91,7 +111,9 @@ const MovieDetails = () => {
 
   useEffect(() => {
     getMovieData(
-      `https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`,
+      ifTV
+        ? `https://api.themoviedb.org/3/tv/${movieId}/videos?language=en-US`
+        : `https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`,
       setVideoData,
       setVideoLoading,
       setVideoError,
@@ -102,7 +124,9 @@ const MovieDetails = () => {
 
   useEffect(() => {
     getMovieData(
-      `https://api.themoviedb.org/3/movie/${movieId}/external_ids`,
+      ifTV
+        ? `https://api.themoviedb.org/3/tv/${movieId}/season/1/external_ids`
+        : `https://api.themoviedb.org/3/movie/${movieId}/external_ids`,
       setExternalIdsData,
       setExternalIdsLoading,
       setExternalIdsError,
@@ -112,7 +136,7 @@ const MovieDetails = () => {
   }, []);
 
   const trailer = videoData?.results.filter(
-    (movie) => movie.name === "Official Trailer"
+    (movie) => movie.type === "Trailer"
   );
 
   const actors = creditData?.cast
@@ -151,6 +175,9 @@ const MovieDetails = () => {
     return <p>Error: Error Fetching Data</p>;
   }
 
+  console.log("MOVIE DATA", movieData);
+  console.log("EXTERNAL IDs", externalIdsData);
+
   return (
     <div className="bg-gray-900">
       <div className="relative isolate overflow-hidden pt-14">
@@ -167,7 +194,11 @@ const MovieDetails = () => {
                 <div className="lg:col-span-5 lg:col-start-8">
                   <div className="flex justify-between">
                     <h1 className="text-3xl font-medium text-gray-400">
-                      {movieData.title} ({getYear(movieData.release_date)})
+                      {ifTV ? movieData.original_name : movieData.title} (
+                      {getYear(
+                        ifTV ? movieData.first_air_date : movieData.release_date
+                      )}
+                      )
                     </h1>
                   </div>
                   <div
@@ -205,7 +236,7 @@ const MovieDetails = () => {
                       </div>
                       <div className="mb-2">
                         <div className="text-sm font-medium text-gray-400">
-                          {toHoursAndMinutes(movieData.runtime)}
+                          {ifTV ? "" : toHoursAndMinutes(movieData.runtime)}
                         </div>
                       </div>
 
@@ -234,7 +265,9 @@ const MovieDetails = () => {
                       <div className="mt-2 ml-2">Back</div>
                     </div>
                   </h2>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-8">
+                  <div
+                  // className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-8"
+                  >
                     <img
                       src={
                         !movieData.belongs_to_collection
@@ -244,16 +277,27 @@ const MovieDetails = () => {
                       alt={movieData.title}
                       className="lg:col-span-2 lg:row-span-2 rounded-lg"
                     />
-                    {/* <YouTube
-                          videoId="2g811Eo7K8U"
-                          opts={opts}
-                          onReady={onPlayerReady}
-                        /> */}
                   </div>
+
+                  {ifTV ? (
+                    <Accordion
+                      open={carouselOpen === 1}
+                      animate={CUSTOM_ANIMATION}
+                      icon={<DropDownIcon id={1} open={carouselOpen} />}
+                    >
+                      <AccordionHeader className="text-white hover:text-white mt-4" onClick={() => handleCarouselOpen(1)}>
+                        View All Episodes
+                      </AccordionHeader>
+                      <AccordionBody>
+                        <EpisodeList series={movieData.seasons} />
+                      </AccordionBody>
+                    </Accordion>
+                  ) : (
+                    ""
+                  )}
                 </div>
 
                 <div className="mt-8 lg:col-span-5">
-                  {/* Product details */}
                   <div className="border-t border-gray-200">
                     <h2 className="text-sm font-medium text-gray-400 uppercase mt-8">
                       Overview
@@ -264,6 +308,32 @@ const MovieDetails = () => {
                       dangerouslySetInnerHTML={{ __html: movieData.overview }}
                     />
                   </div>
+
+                  {movieData.created_by[0]?.name ? (
+                    <div className="border-t mt-8 border-gray-200">
+                      <h2 className="text-sm font-medium text-gray-400 uppercase mt-8">
+                        Creator
+                      </h2>
+
+                      <img
+                        className="w-[128px] h-[140px] mt-2"
+                        src={
+                          movieData.created_by[0]?.profile_path
+                            ? `https://image.tmdb.org/t/p/original${movieData.created_by[0]?.profile_path}`
+                            : "https://www.snapon.co.za/images/thumbs/default-image_550.png"
+                        }
+                        alt={movieData.created_by[0]?.name}
+                      />
+                      <div
+                        className="prose prose-sm mt-4 text-white"
+                        dangerouslySetInnerHTML={{
+                          __html: movieData.created_by[0]?.name,
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
 
                   <div className="mt-8 border-t border-gray-200 pt-8">
                     <h2 className="text-sm font-medium text-gray-400 uppercase">
@@ -341,6 +411,34 @@ const MovieDetails = () => {
                     </div>
                   </div>
 
+                  {movieData.number_of_seasons ? (
+                    <div className="mt-8 border-t border-gray-200 pt-8">
+                      <h2 className="text-sm font-medium text-gray-400 uppercase">
+                        Number of Seasons
+                      </h2>
+
+                      <div className="prose prose-sm mt-4 text-white">
+                        <ul role="list">{movieData.number_of_seasons}</ul>
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+
+                  {movieData.number_of_episodes ? (
+                    <div className="mt-8 border-t border-gray-200 pt-8">
+                      <h2 className="text-sm font-medium text-gray-400 uppercase">
+                        Number of Episodes
+                      </h2>
+
+                      <div className="prose prose-sm mt-4 text-white">
+                        <ul role="list">{movieData.number_of_episodes}</ul>
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+
                   <div className="mt-8 border-t border-gray-200 pt-8">
                     <h2 className="text-sm font-medium text-gray-400 uppercase">
                       Status
@@ -394,12 +492,16 @@ const MovieDetails = () => {
                   </div>
 
                   {/* Policies */}
-                  <section aria-labelledby="policies-heading" className="mt-10">
-                    <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-                      <Cards title="Budget" budget={movieData.budget} />
-                      <Cards title="Revenue" budget={movieData.revenue} />
-                    </dl>
-                  </section>
+                  {!ifTV ? (
+                    <section className="mt-10">
+                      <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+                        <Cards title="Budget" budget={movieData.budget} />
+                        <Cards title="Revenue" budget={movieData.revenue} />
+                      </dl>
+                    </section>
+                  ) : (
+                    ""
+                  )}
 
                   <div>
                     <div className="mx-auto max-w-2xl lg:mx-0">
@@ -415,7 +517,11 @@ const MovieDetails = () => {
                         <li key={company.name}>
                           <img
                             className="w-full"
-                            src={`https://image.tmdb.org/t/p/original${company.logo_path}`}
+                            src={
+                              company.logo_path
+                                ? `https://image.tmdb.org/t/p/original${company.logo_path}`
+                                : "https://www.snapon.co.za/images/thumbs/default-image_550.png"
+                            }
                             alt={company.origin_country}
                           />
                           <h3 className="mt-6 text-lg md:text-sm font-semibold leading-8 tracking-tight text-white">

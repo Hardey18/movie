@@ -2,11 +2,12 @@ import { FC } from "react";
 import { ICreditDataProps } from "../typings";
 
 const CardCarousel:FC<ICreditDataProps> = ({ cast }) => {
+  console.log("CAST", cast);
   return (
     <div className="flex overflow-x-scroll pb-10 hide-scroll-bar mt-4">
       <div className="flex flex-nowrap">
         {cast?.map(actor => (
-        <div className="rounded shadow-lg px-3 w-[148px]">
+        <div key={actor.id} className="rounded shadow-lg px-3 w-[148px]">
           <img
             className="w-full h-[140px]"
             src={actor.profile_path ? `https://image.tmdb.org/t/p/original${actor.profile_path}` : "https://www.snapon.co.za/images/thumbs/default-image_550.png"}

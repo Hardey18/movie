@@ -23,7 +23,7 @@ const moviesCategories = [
 const tvShowsCategories = [
   { name: 'Popular Series', href: '/popular-series', icon: ArrowPathIcon },
   { name: 'Airing Today', href: '/airing-today', icon: CursorArrowRaysIcon },
-  { name: 'On TV', href: '/on-tv', icon: ChartPieIcon },
+  { name: 'On The Air', href: '/on-the-air', icon: ChartPieIcon },
   { name: 'Top Rated Series', href: '/top-rated-series', icon: SquaresPlusIcon },
 ]
 
