@@ -1,5 +1,3 @@
-import React from "react";
-
 const DropDownIcon = ({ id, open }: { id: number, open: number }) => {
   return (
     <svg
