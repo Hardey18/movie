@@ -59,7 +59,7 @@ const HomeHeader = () => {
               <div className="relative flex w-full max-w-[24rem] mt-8">
                 <Input
                   type="search"
-                  label="Search for a movie"
+                  label="Search for a movie or tv series"
                   value={search}
                   onChange={onChange}
                   className="pr-20"
@@ -68,7 +68,7 @@ const HomeHeader = () => {
                   }}
                   crossOrigin={undefined}
                 />
-                <Link to={`/search/${search}`}>
+                <Link to={`/search/movie/${search}`}>
                   <Button
                     size="sm"
                     color={search ? "indigo" : "blue-gray"}

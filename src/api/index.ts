@@ -7,7 +7,8 @@ const getMovieData = (
   setLoading: any,
   setError: any,
   four: boolean,
-  single: boolean = false
+  single: boolean = false,
+  isSearch: boolean = false,
 ) => {
   const options = {
     method: "GET",
@@ -25,7 +26,7 @@ const getMovieData = (
       return res.json();
     })
     .then((json) => {
-      setVideoData(four ? json?.results?.slice(0, 4) : single ? json : json?.results);
+      setVideoData(four ? json?.results?.slice(0, 5) : single ? json : isSearch ? json : json?.results);
       setLoading(false);
     })
     .catch((err) => {

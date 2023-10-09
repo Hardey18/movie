@@ -175,9 +175,6 @@ const MovieDetails = () => {
     return <p>Error: Error Fetching Data</p>;
   }
 
-  console.log("MOVIE DATA", movieData);
-  console.log("EXTERNAL IDs", externalIdsData);
-
   return (
     <div className="bg-gray-900">
       <div className="relative isolate overflow-hidden pt-14">
@@ -309,7 +306,7 @@ const MovieDetails = () => {
                     />
                   </div>
 
-                  {movieData.created_by[0]?.name ? (
+                  {movieData?.created_by ? (
                     <div className="border-t mt-8 border-gray-200">
                       <h2 className="text-sm font-medium text-gray-400 uppercase mt-8">
                         Creator

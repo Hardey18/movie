@@ -32,7 +32,8 @@ function App() {
         <Route path="/upcoming" element={<AllUpcoming />} />
         <Route path="/details/:id" element={<MovieDetails />} />
         <Route path="/details/tv/:id" element={<MovieDetails />} />
-        <Route path="/search/:query" element={<SearchMovies />} />
+        <Route path="/search/tv/:query" element={<SearchMovies />} />
+        <Route path="/search/movie/:query" element={<SearchMovies />} />
       </Routes>
     </div>
   );

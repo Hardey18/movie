@@ -1,9 +1,13 @@
 export interface MovieListProps {
   categories: string;
   // browse: string;
-  products: ProductProps[] | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  products: any;
+  // products: ProductProps[] | null;
   four?: boolean;
   link: string;
+  type?: string;
+  onTypeChange?: unknown;
 }
 
 export interface EpisodeListProps {
@@ -27,6 +31,8 @@ export interface CardProps {
 }
 
 export interface IMovieDataProps {
+  id: string;
+  name: string;
   title: string;
   seasons: SeriesProps[];
   original_name: string;
@@ -51,7 +57,7 @@ export interface IMovieDataProps {
   spoken_languages: SpokenLanguagesProps[];
   production_countries: ProductionCountriesProps[];
   belongs_to_collection: BelongsToCollectionProps;
-  created_by: SeriesCreatedByProps[]
+  created_by: SeriesCreatedByProps[];
 }
 
 interface SeriesCreatedByProps {
@@ -70,19 +76,19 @@ interface VideoResultsProps {
 }
 
 export interface ICreditDataProps {
-  cast: CastProps[]
+  cast: CastProps[];
 }
 
 export interface ICPercentProps {
-  percent: number
+  percent: number;
 }
 export interface IExternalIdDataProps {
-  id: number
-  imdb_id: string
-  wikidata_id: string
-  facebook_id: string
-  instagram_id: string,
-  twitter_id: string
+  id: number;
+  imdb_id: string;
+  wikidata_id: string;
+  facebook_id: string;
+  instagram_id: string;
+  twitter_id: string;
 }
 
 export interface TargetProps {
@@ -90,25 +96,29 @@ export interface TargetProps {
 }
 
 interface InnerTargetProps {
-  value: string
+  value: string;
 }
 
 export interface CastProps {
-  adult: boolean
-  cast_id: number
-  character: string
-  credit_id: string
-  gender: number
-  id: number
-  known_for_department: string
-  name: string
-  order: number
-  original_name: string
-  popularity: number
-  profile_path: string
+  adult: boolean;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  order: number;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
 }
 
-interface ProductProps {
+export interface ProductProps {
+  length: number;
+  map(
+    arg0: (product: IMovieDataProps) => import("react/jsx-runtime").JSX.Element
+  ): import("react").ReactNode;
   id: number;
   title: string;
   name: string;
@@ -117,6 +127,7 @@ interface ProductProps {
   release_date: string;
   first_air_date: string;
   vote_average: number;
+  total_results?: number;
 }
 
 interface BelongsToCollectionProps {
@@ -143,8 +154,16 @@ interface ProductionCountriesProps {
 }
 
 interface ProductionCompanies {
-    id: number
-    logo_path: string;
-    name: string;
-    origin_country: string
+  id: number;
+  logo_path: string;
+  name: string;
+  origin_country: string;
+}
+
+export interface MovieCategoryProps {
+  total_results: string;
+}
+
+export interface TvCategoryProps {
+  total_results: string;
 }

@@ -18,8 +18,6 @@ const PopularSeries = () => {
     );
   }, []);
 
-  console.log("DATA", videoData);
-
   if (loading) {
     return (
       <Skeleton avatar paragraph={{ rows: 4 }} className="p-4 md:p-8" active />

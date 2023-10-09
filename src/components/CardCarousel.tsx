@@ -2,7 +2,6 @@ import { FC } from "react";
 import { ICreditDataProps } from "../typings";
 
 const CardCarousel:FC<ICreditDataProps> = ({ cast }) => {
-  console.log("CAST", cast);
   return (
     <div className="flex overflow-x-scroll pb-10 hide-scroll-bar mt-4">
       <div className="flex flex-nowrap">
