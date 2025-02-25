@@ -1,14 +1,12 @@
 import { FC, useEffect, useState } from "react";
 import { RollbackOutlined } from "@ant-design/icons";
 import { MovieCategoryProps, MovieListProps, ProductProps, TvCategoryProps } from "../typings";
-import { Link, useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import CircularProgressBar from "./CircularProgressBar";
 import { percent } from "../utils";
 import getMovieData from "../api";
 import { Skeleton } from "antd";
-// import { Tabs, TabsHeader, TabsBody, Tab } from "@material-tailwind/react";
 
 const MovieList: FC<MovieListProps> = ({
   categories,

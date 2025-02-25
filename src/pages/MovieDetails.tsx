@@ -4,7 +4,13 @@ import { Skeleton } from "antd";
 import { StarIcon } from "@heroicons/react/20/solid";
 import YouTube, { YouTubeProps } from "react-youtube";
 import { getYear, numberWithCommas, toHoursAndMinutes } from "../utils";
-import { Button, Dialog } from "@material-tailwind/react";
+import {
+  Button,
+  Dialog,
+  Accordion,
+  AccordionHeader,
+  AccordionBody,
+} from "@material-tailwind/react";
 import Cards from "../reusables/Cards";
 import {
   ICreditDataProps,
@@ -22,12 +28,8 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import CardCarousel from "../components/CardCarousel";
 import EpisodeList from "../components/EpisodeList";
-import {
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@material-tailwind/react";
 import DropDownIcon from "../components/DropDownIcon";
+import RecomendationCarousel from "../components/RecommendationCarousel";
 
 const CUSTOM_ANIMATION = {
   mount: { scale: 1 },
@@ -55,6 +57,18 @@ const MovieDetails = () => {
   const [externalIdsError, setExternalIdsError] = useState(null);
   const [open, setOpen] = useState(false);
   const [carouselOpen, setCarouselOpen] = useState(0);
+  const [recommendationsMovieData, setRecommendationsMovieData] = useState([]);
+  const [recommendationsMovieLoading, setRecommendationsMovieLoading] =
+    useState(true);
+  const [recommendationsMovieError, setRecommendationsMovieError] =
+    useState(null);
+  const [recommendationsSeriesData, setRecommendationsSeriesData] = useState(
+    []
+  );
+  const [recommendationsSeriesLoading, setRecommendationsSeriesLoading] =
+    useState(true);
+  const [recommendationsSeriesError, setRecommendationsSeriesError] =
+    useState(null);
 
   const handleCarouselOpen = (value: number) =>
     setCarouselOpen(carouselOpen === value ? 0 : value);
@@ -82,6 +96,26 @@ const MovieDetails = () => {
   const movieId = window.location.href.split("/").reverse()[0];
 
   const ifTV = window.location.href.includes("tv");
+
+  useEffect(() => {
+    getMovieData(
+      `https://api.themoviedb.org/3/movie/${movieId}/recommendations?language=en-US&page=1`,
+      setRecommendationsMovieData,
+      setRecommendationsMovieLoading,
+      setRecommendationsMovieError,
+      false
+    );
+  }, []);
+
+  useEffect(() => {
+    getMovieData(
+      `https://api.themoviedb.org/3/tv/${movieId}/recommendations?language=en-US&page=1`,
+      setRecommendationsSeriesData,
+      setRecommendationsSeriesLoading,
+      setRecommendationsSeriesError,
+      false
+    );
+  }, []);
 
   useEffect(() => {
     getMovieData(
@@ -159,6 +193,14 @@ const MovieDetails = () => {
     return <Skeleton className="p-4 md:p-8" active />;
   }
 
+  if (recommendationsMovieLoading) {
+    return <Skeleton className="p-4 md:p-8" active />;
+  }
+
+  if (recommendationsSeriesLoading) {
+    return <Skeleton className="p-4 md:p-8" active />;
+  }
+
   if (error) {
     return <p>Error: Error Fetching Data</p>;
   }
@@ -206,6 +248,36 @@ const MovieDetails = () => {
                   <div className="mt-4">
                     <h2 className="sr-only">Reviews</h2>
                     <div className="flex flex-col">
+                      <div className="mb-2">
+                        {ifTV ? (
+                          <div className="text-sm font-medium text-gray-400">
+                            {movieData.genres.map((item, index) => (
+                              <span key={item.id}>
+                                {item.name}
+                                {index === movieData.genres.length - 1
+                                  ? ""
+                                  : ","}{" "}
+                              </span>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="text-sm font-medium text-gray-400">
+                            {movieData.release_date}
+                            <span>&#183;</span>{" "}
+                            {movieData.genres.map((item, index) => (
+                              <span key={item.id}>
+                                {item.name}
+                                {index === movieData.genres.length - 1
+                                  ? ""
+                                  : ","}{" "}
+                              </span>
+                            ))}
+                            <span>&#183;</span>{" "}
+                            {toHoursAndMinutes(movieData.runtime)}
+                          </div>
+                        )}
+                      </div>
+
                       <div className="flex mb-2">
                         <p className="text-sm text-gray-300">
                           {movieData.vote_average}
@@ -231,11 +303,11 @@ const MovieDetails = () => {
                           {numberWithCommas(movieData.vote_count)} vote counts
                         </div>
                       </div>
-                      <div className="mb-2">
+                      {/* <div className="mb-2">
                         <div className="text-sm font-medium text-gray-400">
                           {ifTV ? "" : toHoursAndMinutes(movieData.runtime)}
                         </div>
-                      </div>
+                      </div> */}
 
                       <Button onClick={handleOpen} variant="gradient">
                         Play Trailer
@@ -278,11 +350,14 @@ const MovieDetails = () => {
 
                   {ifTV ? (
                     <Accordion
-                      open={carouselOpen === 1}
+                      open={carouselOpen === 0}
                       animate={CUSTOM_ANIMATION}
                       icon={<DropDownIcon id={1} open={carouselOpen} />}
                     >
-                      <AccordionHeader className="text-white hover:text-white mt-4" onClick={() => handleCarouselOpen(1)}>
+                      <AccordionHeader
+                        className="text-white hover:text-white mt-4"
+                        onClick={() => handleCarouselOpen(1)}
+                      >
                         View All Episodes
                       </AccordionHeader>
                       <AccordionBody>
@@ -448,20 +523,6 @@ const MovieDetails = () => {
 
                   <div className="mt-8 border-t border-gray-200 pt-8">
                     <h2 className="text-sm font-medium text-gray-400 uppercase">
-                      Genres
-                    </h2>
-
-                    <div className="prose prose-sm mt-4 text-white">
-                      <ul role="list">
-                        {movieData.genres.map((item) => (
-                          <li key={item.id}>{item.name}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="mt-8 border-t border-gray-200 pt-8">
-                    <h2 className="text-sm font-medium text-gray-400 uppercase">
                       Spoken Languages
                     </h2>
 
@@ -506,10 +567,7 @@ const MovieDetails = () => {
                         Production Companies
                       </h2>
                     </div>
-                    <ul
-                      role="list"
-                      className="mx-auto mt-6 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 xl:grid-cols-4"
-                    >
+                    <ul className="mx-auto mt-6 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 xl:grid-cols-4">
                       {movieData.production_companies.map((company) => (
                         <li key={company.name}>
                           <img
@@ -529,6 +587,16 @@ const MovieDetails = () => {
                     </ul>
                   </div>
                 </div>
+              </div>
+              <div className="mt-8 border-t border-gray-200 pt-8">
+                <h2 className="text-sm font-medium text-gray-400 uppercase">
+                  Recommendations
+                </h2>
+                <RecomendationCarousel
+                  cast={
+                    ifTV ? recommendationsSeriesData : recommendationsMovieData
+                  }
+                />
               </div>
             </div>
           </div>

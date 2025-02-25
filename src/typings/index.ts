@@ -8,6 +8,7 @@ export interface MovieListProps {
   link: string;
   type?: string;
   onTypeChange?: unknown;
+  recommend?: boolean;
 }
 
 export interface EpisodeListProps {
@@ -112,6 +113,10 @@ export interface CastProps {
   original_name: string;
   popularity: number;
   profile_path: string;
+  poster_path: string;
+  title: string;
+  release_date: string;
+  first_air_date: string
 }
 
 export interface ProductProps {
