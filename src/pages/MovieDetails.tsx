@@ -60,14 +60,14 @@ const MovieDetails = () => {
   const [recommendationsMovieData, setRecommendationsMovieData] = useState([]);
   const [recommendationsMovieLoading, setRecommendationsMovieLoading] =
     useState(true);
-  const [recommendationsMovieError, setRecommendationsMovieError] =
+  const [, setRecommendationsMovieError] =
     useState(null);
   const [recommendationsSeriesData, setRecommendationsSeriesData] = useState(
     []
   );
   const [recommendationsSeriesLoading, setRecommendationsSeriesLoading] =
     useState(true);
-  const [recommendationsSeriesError, setRecommendationsSeriesError] =
+  const [, setRecommendationsSeriesError] =
     useState(null);
 
   const handleCarouselOpen = (value: number) =>
