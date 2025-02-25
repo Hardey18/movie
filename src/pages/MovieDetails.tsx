@@ -263,7 +263,7 @@ const MovieDetails = () => {
                         ) : (
                           <div className="text-sm font-medium text-gray-400">
                             {movieData.release_date}
-                            <span>&#183;</span>{" "}
+                            <span> &#183;</span>{" "}
                             {movieData.genres.map((item, index) => (
                               <span key={item.id}>
                                 {item.name}
