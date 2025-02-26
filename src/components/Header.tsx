@@ -11,6 +11,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Link } from 'react-router-dom'
+import { PlayCircleOutlined } from '@ant-design/icons'
 
 const moviesCategories = [
   { name: 'Trending Movies', href: '/trending', icon: ArrowPathIcon },
@@ -40,7 +41,7 @@ const Header = () => {
         <div className="flex lg:flex-1">
           <Link to="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+            <PlayCircleOutlined style={{ fontSize: "32px", color: "#000000" }} />
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -50,7 +51,7 @@ const Header = () => {
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
-            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+            <Bars3Icon style={{ color: "#000000" }} className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12 mr-8">
@@ -151,7 +152,7 @@ const Header = () => {
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="sr-only">Close menu</span>
-              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+              <XMarkIcon style={{ color: "#000000" }} className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
           <div className="mt-6 flow-root">
