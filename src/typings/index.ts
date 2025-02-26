@@ -59,6 +59,7 @@ export interface IMovieDataProps {
   production_countries: ProductionCountriesProps[];
   belongs_to_collection: BelongsToCollectionProps;
   created_by: SeriesCreatedByProps[];
+  networks: NetworkProps[];
 }
 
 interface SeriesCreatedByProps {
@@ -156,6 +157,13 @@ interface SpokenLanguagesProps {
 interface ProductionCountriesProps {
   iso_3166_1: string;
   name: string;
+}
+
+interface NetworkProps {
+  id: number;
+  logo_path: string;
+  name: string;
+  origin_country: string;
 }
 
 interface ProductionCompanies {

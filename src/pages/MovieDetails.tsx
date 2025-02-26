@@ -60,15 +60,13 @@ const MovieDetails = () => {
   const [recommendationsMovieData, setRecommendationsMovieData] = useState([]);
   const [recommendationsMovieLoading, setRecommendationsMovieLoading] =
     useState(true);
-  const [, setRecommendationsMovieError] =
-    useState(null);
+  const [, setRecommendationsMovieError] = useState(null);
   const [recommendationsSeriesData, setRecommendationsSeriesData] = useState(
     []
   );
   const [recommendationsSeriesLoading, setRecommendationsSeriesLoading] =
     useState(true);
-  const [, setRecommendationsSeriesError] =
-    useState(null);
+  const [, setRecommendationsSeriesError] = useState(null);
 
   const handleCarouselOpen = (value: number) =>
     setCarouselOpen(carouselOpen === value ? 0 : value);
@@ -560,6 +558,34 @@ const MovieDetails = () => {
                   ) : (
                     ""
                   )}
+
+                  {ifTV ? (
+                    <div>
+                      <div className="mx-auto max-w-2xl lg:mx-0">
+                        <h2 className="text-sm font-medium text-gray-400 uppercase mt-12">
+                          Network
+                        </h2>
+                      </div>
+                      <ul className="mx-auto mt-6 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 xl:grid-cols-4">
+                        {movieData.networks.map((network) => (
+                          <li key={network.id}>
+                            <img
+                              className="w-full"
+                              src={
+                                network.logo_path
+                                  ? `https://image.tmdb.org/t/p/original${network.logo_path}`
+                                  : "https://www.snapon.co.za/images/thumbs/default-image_550.png"
+                              }
+                              alt={network.origin_country}
+                            />
+                            <h3 className="mt-6 text-lg md:text-sm font-semibold leading-8 tracking-tight text-white">
+                              {network.name}
+                            </h3>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
 
                   <div>
                     <div className="mx-auto max-w-2xl lg:mx-0">
