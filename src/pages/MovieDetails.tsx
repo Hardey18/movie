@@ -664,7 +664,7 @@ const MovieDetails = () => {
                 <h2 className="text-sm font-medium text-gray-400 uppercase">
                   Reviews
                 </h2>
-                <ReviewList reviews={ifTV ? reviewSeriesData : reviewData} />
+                <ReviewList review={ifTV ? reviewSeriesData : reviewData} />
               </div>
             </div>
           </div>

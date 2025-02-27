@@ -1,8 +1,8 @@
 import { StarIcon } from "@heroicons/react/20/solid";
 import { FC } from "react";
-import { ReviewProps } from "../typings";
+import { IReviewProps, ReviewProp, ReviewProps } from "../typings";
 
-const ReviewCard: FC<ReviewProps> = ({ review }) => {
+const ReviewCard: FC<ReviewProp> = ({ review }) => {
   return (
     <div className="bg-white shadow-lg rounded-2xl p-4 w-full">
       <div className="flex items-center space-x-4">
@@ -40,11 +40,11 @@ const ReviewCard: FC<ReviewProps> = ({ review }) => {
   );
 };
 
-const ReviewList: any = ({ reviews }) => {
+const ReviewList: FC<ReviewProps> = ({ review }) => {
   return (
     <div className="flex flex-col items-center space-y-4 p-4 mx-auto w-full">
-      {reviews.map((review) => (
-        <ReviewCard key={review.author} review={review} />
+      {review?.map((data: IReviewProps) => (
+        <ReviewCard key={data.author} review={data} />
       ))}
     </div>
   );

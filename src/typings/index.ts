@@ -32,7 +32,10 @@ export interface CardProps {
 }
 
 export interface ReviewProps {
-  key: string;
+  review: IReviewProps[]
+}
+
+export interface ReviewProp {
   review: {
     author: string;
     author_details: {
@@ -44,6 +47,18 @@ export interface ReviewProps {
     created_at: string;
     id: string;
   };
+}
+
+export interface IReviewProps {
+  author: string;
+  author_details: {
+    name: string;
+    avatar_path: string;
+    rating: number;
+  };
+  content: string;
+  created_at: string;
+  id: string;
 }
 
 export interface ReviewListProps {
