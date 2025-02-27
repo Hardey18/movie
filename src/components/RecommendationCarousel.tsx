@@ -11,7 +11,6 @@ const RecomendationCarousel: FC<ICreditDataProps> = ({ cast }) => {
     window.location.reload();
     window.scrollTo({ top: 0, left: 0})
   };
-  console.log("CAST", cast);
   return (
     <div className="flex overflow-x-scroll pb-10 hide-scroll-bar mt-4">
       <div className="flex flex-nowrap">

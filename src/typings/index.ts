@@ -31,6 +31,33 @@ export interface CardProps {
   budget: number;
 }
 
+export interface ReviewProps {
+  key: string;
+  review: {
+    author: string;
+    author_details: {
+      name: string;
+      avatar_path: string;
+      rating: number;
+    };
+    content: string;
+    created_at: string;
+    id: string;
+  };
+}
+
+export interface ReviewListProps {
+  author: string;
+  author_details: {
+    name: string;
+    avatar_path: string;
+    rating: number;
+  };
+  content: string;
+  created_at: string;
+  id: string;
+}
+
 export interface IMovieDataProps {
   id: string;
   name: string;
@@ -117,7 +144,7 @@ export interface CastProps {
   poster_path: string;
   title: string;
   release_date: string;
-  first_air_date: string
+  first_air_date: string;
 }
 
 export interface ProductProps {

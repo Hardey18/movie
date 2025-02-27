@@ -30,6 +30,7 @@ import CardCarousel from "../components/CardCarousel";
 import EpisodeList from "../components/EpisodeList";
 import DropDownIcon from "../components/DropDownIcon";
 import RecomendationCarousel from "../components/RecommendationCarousel";
+import ReviewList from "../components/Review";
 
 const CUSTOM_ANIMATION = {
   mount: { scale: 1 },
@@ -67,6 +68,13 @@ const MovieDetails = () => {
   const [recommendationsSeriesLoading, setRecommendationsSeriesLoading] =
     useState(true);
   const [, setRecommendationsSeriesError] = useState(null);
+
+  const [reviewData, setReviewData] = useState([]);
+  const [reviewLoading, setReviewLoading] = useState(true);
+  const [, setReviewError] = useState(null);
+  const [reviewSeriesData, setReviewSeriesData] = useState([]);
+  const [reviewSeriesLoading, setReviewSeriesLoading] = useState(true);
+  const [, setReviewSeriesError] = useState(null);
 
   const handleCarouselOpen = (value: number) =>
     setCarouselOpen(carouselOpen === value ? 0 : value);
@@ -111,6 +119,26 @@ const MovieDetails = () => {
       setRecommendationsSeriesData,
       setRecommendationsSeriesLoading,
       setRecommendationsSeriesError,
+      false
+    );
+  }, []);
+
+  useEffect(() => {
+    getMovieData(
+      `https://api.themoviedb.org/3/movie/${movieId}/reviews?language=en-US&page=1`,
+      setReviewData,
+      setReviewLoading,
+      setReviewError,
+      false
+    );
+  }, []);
+
+  useEffect(() => {
+    getMovieData(
+      `https://api.themoviedb.org/3/tv/${movieId}/reviews?language=en-US&page=1`,
+      setReviewSeriesData,
+      setReviewSeriesLoading,
+      setReviewSeriesError,
       false
     );
   }, []);
@@ -196,6 +224,14 @@ const MovieDetails = () => {
   }
 
   if (recommendationsSeriesLoading) {
+    return <Skeleton className="p-4 md:p-8" active />;
+  }
+
+  if (reviewLoading) {
+    return <Skeleton className="p-4 md:p-8" active />;
+  }
+
+  if (reviewSeriesLoading) {
     return <Skeleton className="p-4 md:p-8" active />;
   }
 
@@ -337,7 +373,7 @@ const MovieDetails = () => {
                   >
                     <img
                       src={
-                        !movieData.belongs_to_collection
+                        movieData.poster_path
                           ? `https://image.tmdb.org/t/p/original${movieData.poster_path}`
                           : `https://image.tmdb.org/t/p/original${movieData.belongs_to_collection.poster_path}`
                       }
@@ -563,7 +599,7 @@ const MovieDetails = () => {
                     <div>
                       <div className="mx-auto max-w-2xl lg:mx-0">
                         <h2 className="text-sm font-medium text-gray-400 uppercase mt-12">
-                          Network
+                          Networks
                         </h2>
                       </div>
                       <ul className="mx-auto mt-6 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 xl:grid-cols-4">
@@ -623,6 +659,12 @@ const MovieDetails = () => {
                     ifTV ? recommendationsSeriesData : recommendationsMovieData
                   }
                 />
+              </div>
+              <div className="mt-8 border-t border-gray-200 pt-8">
+                <h2 className="text-sm font-medium text-gray-400 uppercase">
+                  Reviews
+                </h2>
+                <ReviewList reviews={ifTV ? reviewSeriesData : reviewData} />
               </div>
             </div>
           </div>
