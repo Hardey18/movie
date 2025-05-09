@@ -273,8 +273,6 @@ const MovieDetails = () => {
     return <p>Error: Error Fetching Data</p>;
   }
 
-  console.log("ALL IMAGES", allImages);
-  console.log("IF TV", ifTV);
 
   return (
     <div className="bg-gray-900">
@@ -405,12 +403,14 @@ const MovieDetails = () => {
                       alt={movieData.title}
                       className="lg:col-span-2 lg:row-span-2 rounded-lg"
                     />
-                    <div className="mt-8">
-                      <h2 className="text-sm font-medium text-gray-400 uppercase mb-2">
-                        Movie Images
-                      </h2>
-                      <CarouselCustomNavigation imageObject={allImages} />
-                    </div>
+                    {allImages?.backdrops.length > 0 && (
+                      <div className="mt-8">
+                        <h2 className="text-sm font-medium text-gray-400 uppercase mb-2">
+                          All Images
+                        </h2>
+                        <CarouselCustomNavigation imageObject={allImages} />
+                      </div>
+                    )}
                   </div>
 
                   {ifTV ? (
@@ -681,22 +681,38 @@ const MovieDetails = () => {
                   </div>
                 </div>
               </div>
-              <div className="mt-8 border-t border-gray-200 pt-8">
-                <h2 className="text-sm font-medium text-gray-400 uppercase">
-                  Recommendations
-                </h2>
-                <RecomendationCarousel
-                  cast={
-                    ifTV ? recommendationsSeriesData : recommendationsMovieData
-                  }
-                />
-              </div>
-              <div className="mt-8 border-t border-gray-200 pt-8">
-                <h2 className="text-sm font-medium text-gray-400 uppercase">
-                  Reviews
-                </h2>
-                <ReviewList review={ifTV ? reviewSeriesData : reviewData} />
-              </div>
+              {recommendationsSeriesData?.length > 0 && (
+                <div className="mt-8 border-t border-gray-200 pt-8">
+                  <h2 className="text-sm font-medium text-gray-400 uppercase">
+                    Recommendations
+                  </h2>
+                  <RecomendationCarousel cast={recommendationsSeriesData} />
+                </div>
+              )}
+              {recommendationsMovieData?.length > 0 && (
+                <div className="mt-8 border-t border-gray-200 pt-8">
+                  <h2 className="text-sm font-medium text-gray-400 uppercase">
+                    Recommendations
+                  </h2>
+                  <RecomendationCarousel cast={recommendationsMovieData} />
+                </div>
+              )}
+              {reviewSeriesData?.length > 0 && (
+                <div className="mt-8 border-t border-gray-200 pt-8">
+                  <h2 className="text-sm font-medium text-gray-400 uppercase">
+                    Reviews
+                  </h2>
+                  <ReviewList review={reviewSeriesData} />
+                </div>
+              )}
+              {reviewData?.length > 0 && (
+                <div className="mt-8 border-t border-gray-200 pt-8">
+                  <h2 className="text-sm font-medium text-gray-400 uppercase">
+                    Reviews
+                  </h2>
+                  <ReviewList review={reviewData} />
+                </div>
+              )}
             </div>
           </div>
         </div>

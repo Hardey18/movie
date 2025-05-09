@@ -20,6 +20,7 @@ const CarouselCustomNavigation = ({ imageObject }: IImageObjectProps) => {
       )}
       autoplay
       autoplayDelay={5000}
+      loop={true}
     >
         {imageObject.backdrops?.map(data => (
             <img
