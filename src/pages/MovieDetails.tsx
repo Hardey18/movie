@@ -150,8 +150,9 @@ const MovieDetails = () => {
 
   useEffect(() => {
     getMovieData(
-      ifTV ? `https://api.themoviedb.org/3/tv/${movieId}/images?include_image_language=en` :
-      `https://api.themoviedb.org/3/movie/${movieId}/images?include_image_language=en`,
+      ifTV
+        ? `https://api.themoviedb.org/3/tv/${movieId}/images?include_image_language=en`
+        : `https://api.themoviedb.org/3/movie/${movieId}/images?include_image_language=en`,
       setAllImages,
       setAllImagesLoading,
       setAllImagesError,
@@ -447,17 +448,17 @@ const MovieDetails = () => {
 
                   {movieData?.created_by ? (
                     <div className="border-t mt-8 border-gray-200">
-                      <h2 className="text-sm font-medium text-gray-400 uppercase mt-8">
+                      <h2 className="text-sm font-medium text-gray-400 uppercase mt-8 mb-4">
                         Creator
                       </h2>
 
                       <img
-                        className="w-[128px] h-[140px] mt-2"
                         src={
                           movieData.created_by[0]?.profile_path
                             ? `https://image.tmdb.org/t/p/original${movieData.created_by[0]?.profile_path}`
                             : "https://www.snapon.co.za/images/thumbs/default-image_550.png"
                         }
+                        className="mb-4 w-32 rounded-lg"
                         alt={movieData.created_by[0]?.name}
                       />
                       <div
