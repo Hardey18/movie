@@ -32,7 +32,7 @@ export interface CardProps {
 }
 
 export interface ReviewProps {
-  review: IReviewProps[]
+  review: IReviewProps[];
 }
 
 export interface ReviewProp {
@@ -111,6 +111,16 @@ interface SeriesCreatedByProps {
 
 export interface IVideoDataProps {
   results: VideoResultsProps[];
+}
+
+export interface IAllImagesProps {
+  aspect_ratio: number;
+  height: number;
+  iso_639_1: string;
+  file_path: string;
+  vote_average: number;
+  vote_count: number;
+  width: number;
 }
 
 interface VideoResultsProps {

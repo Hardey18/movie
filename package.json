@@ -13,7 +13,7 @@
     "@ant-design/icons": "^5.2.5",
     "@headlessui/react": "^1.7.16",
     "@heroicons/react": "^2.0.18",
-    "@material-tailwind/react": "^2.1.0",
+    "@material-tailwind/react": "^2.1.10",
     "@types/date-fns": "^2.6.0",
     "antd": "^5.8.3",
     "daisyui": "^3.5.1",

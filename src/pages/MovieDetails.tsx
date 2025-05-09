@@ -13,6 +13,7 @@ import {
 } from "@material-tailwind/react";
 import Cards from "../reusables/Cards";
 import {
+  IAllImagesProps,
   ICreditDataProps,
   IExternalIdDataProps,
   IMovieDataProps,
@@ -31,6 +32,7 @@ import EpisodeList from "../components/EpisodeList";
 import DropDownIcon from "../components/DropDownIcon";
 import RecomendationCarousel from "../components/RecommendationCarousel";
 import ReviewList from "../components/Review";
+import CarouselCustomNavigation from "../reusables/Carousel";
 
 const CUSTOM_ANIMATION = {
   mount: { scale: 1 },
@@ -44,6 +46,7 @@ function classNames(...classes: string[]) {
 const MovieDetails = () => {
   const [movieData, setMovieData] = useState<IMovieDataProps>(null!);
   const [videoData, setVideoData] = useState<IVideoDataProps>(null!);
+  const [allImages, setAllImages] = useState<IAllImagesProps>(null!);
   const [creditData, setCreditData] = useState<ICreditDataProps>(null!);
   const [externalIdsData, setExternalIdsData] = useState<IExternalIdDataProps>(
     null!
@@ -75,6 +78,8 @@ const MovieDetails = () => {
   const [reviewSeriesData, setReviewSeriesData] = useState([]);
   const [reviewSeriesLoading, setReviewSeriesLoading] = useState(true);
   const [, setReviewSeriesError] = useState(null);
+  const [allImagesLoading, setAllImagesLoading] = useState(true);
+  const [, setAllImagesError] = useState(null);
 
   const handleCarouselOpen = (value: number) =>
     setCarouselOpen(carouselOpen === value ? 0 : value);
@@ -140,6 +145,18 @@ const MovieDetails = () => {
       setReviewSeriesLoading,
       setReviewSeriesError,
       false
+    );
+  }, []);
+
+  useEffect(() => {
+    getMovieData(
+      ifTV ? `https://api.themoviedb.org/3/tv/${movieId}/images?include_image_language=en` :
+      `https://api.themoviedb.org/3/movie/${movieId}/images?include_image_language=en`,
+      setAllImages,
+      setAllImagesLoading,
+      setAllImagesError,
+      false,
+      true
     );
   }, []);
 
@@ -235,6 +252,10 @@ const MovieDetails = () => {
     return <Skeleton className="p-4 md:p-8" active />;
   }
 
+  if (allImagesLoading) {
+    return <Skeleton className="p-4 md:p-8" active />;
+  }
+
   if (error) {
     return <p>Error: Error Fetching Data</p>;
   }
@@ -250,6 +271,9 @@ const MovieDetails = () => {
   if (externalIdsError) {
     return <p>Error: Error Fetching Data</p>;
   }
+
+  console.log("ALL IMAGES", allImages);
+  console.log("IF TV", ifTV);
 
   return (
     <div className="bg-gray-900">
@@ -380,6 +404,12 @@ const MovieDetails = () => {
                       alt={movieData.title}
                       className="lg:col-span-2 lg:row-span-2 rounded-lg"
                     />
+                    <div className="mt-8">
+                      <h2 className="text-sm font-medium text-gray-400 uppercase mb-2">
+                        Movie Images
+                      </h2>
+                      <CarouselCustomNavigation imageObject={allImages} />
+                    </div>
                   </div>
 
                   {ifTV ? (
