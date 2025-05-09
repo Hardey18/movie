@@ -62,7 +62,7 @@ const HomeHeader = () => {
                   label="Search for a movie or tv series"
                   value={search}
                   onChange={onChange}
-                  className="pr-20"
+                  className="pr-20 text-base sm:text-sm"
                   containerProps={{
                     className: "min-w-0",
                   }}
