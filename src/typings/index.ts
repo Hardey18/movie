@@ -123,6 +123,46 @@ export interface IAllImagesProps {
   width: number;
 }
 
+export interface IImagesProps {
+  backdrops: IAllImagesProps[];
+  logos: ILogoProps[];
+  posters: IPosterProps[];
+  id: string;
+}
+
+export interface ILogoProps {
+  aspect_ratio: number;
+  height: number;
+  iso_639_1: string;
+  file_path: string;
+  vote_average: number;
+  vote_count: number;
+  width: number;
+}
+
+export interface IPosterProps {
+  aspect_ratio: number;
+  height: number;
+  iso_639_1: string;
+  file_path: string;
+  vote_average: number;
+  vote_count: number;
+  width: number;
+}
+
+export interface IImageObjectProps {
+  // backdrops: IAllImagesProps[];
+  // logos: ILogoProps[];
+  // posters: IPosterProps[];
+  // id: string
+  imageObject: {
+    backdrops: IAllImagesProps[];
+    logos: ILogoProps[];
+    posters: IPosterProps[];
+    id: string;
+  };
+}
+
 interface VideoResultsProps {
   name: string;
   key: string;

@@ -1,6 +1,7 @@
 import { Carousel } from "@material-tailwind/react";
+import { IImageObjectProps } from "../typings";
 
-const CarouselCustomNavigation = ({ imageObject }) => {
+const CarouselCustomNavigation = ({ imageObject }: IImageObjectProps) => {
   return (
     <Carousel
       className="rounded-xl"

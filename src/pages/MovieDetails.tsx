@@ -13,9 +13,9 @@ import {
 } from "@material-tailwind/react";
 import Cards from "../reusables/Cards";
 import {
-  IAllImagesProps,
   ICreditDataProps,
   IExternalIdDataProps,
+  IImagesProps,
   IMovieDataProps,
   IVideoDataProps,
 } from "../typings";
@@ -46,7 +46,7 @@ function classNames(...classes: string[]) {
 const MovieDetails = () => {
   const [movieData, setMovieData] = useState<IMovieDataProps>(null!);
   const [videoData, setVideoData] = useState<IVideoDataProps>(null!);
-  const [allImages, setAllImages] = useState<IAllImagesProps>(null!);
+  const [allImages, setAllImages] = useState<IImagesProps>(null!);
   const [creditData, setCreditData] = useState<ICreditDataProps>(null!);
   const [externalIdsData, setExternalIdsData] = useState<IExternalIdDataProps>(
     null!
