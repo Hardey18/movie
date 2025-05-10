@@ -273,7 +273,6 @@ const MovieDetails = () => {
     return <p>Error: Error Fetching Data</p>;
   }
 
-
   return (
     <div className="bg-gray-900">
       <div className="relative isolate overflow-hidden pt-14">
@@ -681,7 +680,7 @@ const MovieDetails = () => {
                   </div>
                 </div>
               </div>
-              {recommendationsSeriesData?.length > 0 && (
+              {recommendationsSeriesData?.length > 0 && ifTV && (
                 <div className="mt-8 border-t border-gray-200 pt-8">
                   <h2 className="text-sm font-medium text-gray-400 uppercase">
                     Recommendations
@@ -689,7 +688,7 @@ const MovieDetails = () => {
                   <RecomendationCarousel cast={recommendationsSeriesData} />
                 </div>
               )}
-              {recommendationsMovieData?.length > 0 && (
+              {recommendationsMovieData?.length > 0 && !ifTV && (
                 <div className="mt-8 border-t border-gray-200 pt-8">
                   <h2 className="text-sm font-medium text-gray-400 uppercase">
                     Recommendations

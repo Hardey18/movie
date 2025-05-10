@@ -33,8 +33,8 @@ const Hero = () => {
                     placeholder="Search for a movie or tv series"
                     className="text-base rounded-full text-gray-900 flex-1 py-4 px-6 shadow-[0px 15px 30px -4px rgba(16, 24, 40, 0.03)] md:shadow-none bg-white md:bg-transparent shadow-none placeholder:text-gray-400 focus:outline-none md:w-fit w-full"
                   />
-                  <Link className="" to={`/search/movie/${search}`}>
-                    <button className="bg-indigo-600 rounded-full py-3 px-7 text-base font-semibold text-white hover:bg-indigo-700 cursor-pointer transition-all duration-500 md:w-fit w-full">
+                  <Link to={`/search/movie/${search}`}>
+                    <button disabled={!search} className={`${search ? 'bg-indigo-600' : 'bg-gray-700'} rounded-full py-3 px-7 text-base font-semibold text-white ${search ? 'hover:bg-indigo-800' : 'hover:bg-none'} cursor-pointer transition-all duration-500 md:w-fit w-full`}>
                       Search
                     </button>
                   </Link>
