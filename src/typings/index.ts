@@ -11,6 +11,11 @@ export interface MovieListProps {
   recommend?: boolean;
 }
 
+export interface TitleProps {
+  withColor?: string;
+  plain?: string;
+}
+
 export interface EpisodeListProps {
   series: SeriesProps[];
 }
