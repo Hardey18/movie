@@ -1,6 +1,5 @@
 import AiringToday from "../components/AiringToday";
 import Hero from "../components/Hero";
-import HomeHeader from "../components/HomeHeader";
 import NowPlaying from "../components/NowPlaying";
 import OnTheAir from "../components/OnTheAir";
 import Popular from "../components/Popular";
